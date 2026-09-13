@@ -3,379 +3,196 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>PoshakGhor Spin & Win</title>
+<title>PoshakGhor Spin Game</title>
 
 <style>
-
 *{
-box-sizing:border-box;
+  box-sizing:border-box;
 }
 
 body{
-margin:0;
-font-family:Arial,"Noto Sans Bengali",sans-serif;
-background:linear-gradient(135deg,#fff7ed,#eaf3ff);
-color:#172033;
+  margin:0;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:linear-gradient(135deg,#eef3ff,#ffffff);
+  color:#172033;
+  text-align:center;
 }
 
 .container{
-max-width:620px;
-margin:auto;
-padding:10px;
+  width:100%;
+  max-width:600px;
+  margin:auto;
+  padding:15px;
 }
 
 .header{
-background:#062d63;
-color:white;
-text-align:center;
-padding:20px 12px;
-border-radius:0 0 25px 25px;
-box-shadow:0 6px 20px #0003;
+  background:linear-gradient(135deg,#182b75,#3048b8);
+  color:white;
+  border-radius:20px;
+  padding:22px 15px;
+  margin-bottom:18px;
+  box-shadow:0 8px 25px #0002;
 }
 
 .logo{
-font-size:32px;
-font-weight:900;
-}
-
-.logo span{
-color:#ffd21f;
+  font-size:30px;
+  font-weight:800;
+  margin-bottom:8px;
 }
 
 .title{
-font-size:25px;
-font-weight:900;
-color:#ffd21f;
-line-height:1.3;
-margin-top:10px;
-}
-
-.title span{
-color:white;
+  font-size:24px;
+  font-weight:800;
+  line-height:1.4;
 }
 
 .subtitle{
-font-size:14px;
-margin-top:6px;
+  margin-top:10px;
+  font-size:15px;
+  opacity:.95;
 }
 
-.card{
-background:white;
-margin-top:14px;
-padding:12px;
-border-radius:25px;
-box-shadow:0 8px 25px #0002;
+.game{
+  background:white;
+  border-radius:24px;
+  padding:18px 10px 25px;
+  box-shadow:0 8px 30px #0002;
 }
 
-/* WHEEL */
-
-.wheel-area{
-position:relative;
-width:min(96vw,560px);
-aspect-ratio:1;
-margin:auto;
-}
-
-.wheel{
-position:absolute;
-inset:3%;
-border-radius:50%;
-overflow:hidden;
-border:8px solid white;
-box-shadow:0 10px 35px #0004;
-
-transition:
-transform 4.8s cubic-bezier(.12,.72,.1,1);
+.wheel-wrap{
+  position:relative;
+  width:min(92vw,460px);
+  height:min(92vw,460px);
+  margin:10px auto 22px;
 }
 
 canvas{
-width:100%;
-height:100%;
-display:block;
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:50%;
 }
 
 .pointer{
-position:absolute;
-z-index:5;
-top:-2px;
-left:50%;
-transform:translateX(-50%);
-
-width:0;
-height:0;
-
-border-left:19px solid transparent;
-border-right:19px solid transparent;
-border-top:45px solid #111;
-
-filter:drop-shadow(0 3px 2px #0005);
+  position:absolute;
+  top:-4px;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+  border-left:18px solid transparent;
+  border-right:18px solid transparent;
+  border-top:42px solid #111;
+  z-index:10;
+  filter:drop-shadow(0 3px 3px #0005);
 }
 
-/* SPIN BUTTON */
+.center{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:82px;
+  height:82px;
+  background:white;
+  border:8px solid #172b78;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  font-weight:bold;
+  color:#172b78;
+  box-shadow:0 3px 10px #0004;
+  z-index:5;
+}
 
 .spin{
-display:block;
-width:92%;
-margin:8px auto;
+  width:90%;
+  max-width:390px;
+  padding:17px;
+  border:0;
+  border-radius:50px;
+  background:linear-gradient(135deg,#f33,#b40000);
+  color:white;
+  font-size:22px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 8px 18px #9005;
+}
 
-padding:17px;
-
-border:none;
-border-radius:18px;
-
-background:linear-gradient(
-180deg,
-#ff493d,
-#dc1f1f
-);
-
-color:white;
-
-font-size:23px;
-font-weight:900;
-
-box-shadow:
-0 8px 20px #dc1f1f55;
-
-cursor:pointer;
+.spin:active{
+  transform:scale(.97);
 }
 
 .spin:disabled{
-opacity:.5;
+  background:#999;
+  cursor:not-allowed;
 }
-
-/* RESULT */
 
 .result{
-margin:10px auto;
-
-padding:14px;
-
-text-align:center;
-
-border:2px dashed #16a34a;
-
-background:#f0fdf4;
-
-border-radius:17px;
-
-font-size:20px;
-font-weight:900;
-
-color:#166534;
-
-min-height:55px;
+  margin:20px auto 0;
+  padding:18px;
+  border-radius:18px;
+  background:#f1f5ff;
+  border:2px solid #d6def8;
+  font-size:20px;
+  font-weight:bold;
+  display:none;
 }
 
-/* ADMIN */
-
-.admin-button{
-border:none;
-
-background:#eef4ff;
-
-color:#123d78;
-
-padding:11px 15px;
-
-border-radius:12px;
-
-font-weight:800;
+.note{
+  margin-top:15px;
+  font-size:13px;
+  color:#666;
+  line-height:1.6;
 }
 
-.admin-panel{
-display:none;
-margin-top:15px;
+.admin{
+  margin-top:20px;
+  text-align:left;
+  background:#f7f7f7;
+  border-radius:15px;
+  padding:15px;
 }
 
-.admin-panel.open{
-display:block;
+.admin summary{
+  cursor:pointer;
+  font-weight:bold;
 }
 
-.grid{
-display:grid;
-
-grid-template-columns:
-1fr 90px 70px;
-
-gap:6px;
-
-align-items:center;
-
-font-size:14px;
+.admin table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+  font-size:13px;
 }
 
-.grid input{
-width:100%;
-
-padding:8px;
-
-border:
-1px solid #ccd5e2;
-
-border-radius:9px;
+.admin th,
+.admin td{
+  border:1px solid #ddd;
+  padding:7px;
 }
 
-.row{
-padding:7px 0;
-
-border-bottom:
-1px solid #eee;
-}
-
-.save{
-margin-top:12px;
-
-border:none;
-
-background:#16a34a;
-
-color:white;
-
-padding:11px 20px;
-
-border-radius:10px;
-
-font-weight:800;
+.admin input{
+  width:65px;
+  padding:5px;
 }
 
 .reset{
-margin-top:12px;
-
-border:none;
-
-background:#64748b;
-
-color:white;
-
-padding:11px 20px;
-
-border-radius:10px;
-
-font-weight:800;
-}
-
-.info{
-margin-top:12px;
-
-background:#062d63;
-
-color:white;
-
-padding:14px;
-
-border-radius:17px;
-
-font-size:13px;
-
-line-height:1.7;
-}
-
-/* POPUP */
-
-.modal{
-position:fixed;
-
-inset:0;
-
-background:#0009;
-
-display:none;
-
-align-items:center;
-
-justify-content:center;
-
-padding:20px;
-
-z-index:100;
-}
-
-.modal.show{
-display:flex;
-}
-
-.popup{
-background:white;
-
-width:min(400px,100%);
-
-border-radius:27px;
-
-padding:28px 18px;
-
-text-align:center;
-
-box-shadow:
-0 20px 60px #0006;
-
-animation:
-pop .3s ease;
-}
-
-@keyframes pop{
-
-from{
-transform:scale(.7);
-opacity:0;
-}
-
-to{
-transform:scale(1);
-opacity:1;
-}
-
-}
-
-.gift{
-font-size:65px;
-}
-
-.congratulations{
-font-size:30px;
-
-font-weight:900;
-
-color:#16a34a;
-}
-
-.prize{
-font-size:24px;
-
-font-weight:900;
-
-color:#123d78;
-
-margin:12px;
-}
-
-.ok{
-border:none;
-
-background:#16a34a;
-
-color:white;
-
-padding:12px 35px;
-
-border-radius:12px;
-
-font-size:17px;
-
-font-weight:900;
+  margin-top:12px;
+  padding:10px 15px;
+  border:0;
+  border-radius:8px;
+  background:#222;
+  color:white;
 }
 
 .footer{
-text-align:center;
-
-font-size:12px;
-
-color:#64748b;
-
-margin-top:15px;
+  margin:20px 0 5px;
+  font-size:12px;
+  color:#777;
 }
-
 </style>
 </head>
 
@@ -383,150 +200,392 @@ margin-top:15px;
 
 <div class="container">
 
-<header class="header">
+  <div class="header">
+    <div class="logo">🛍️ PoshakGhor</div>
 
-<div class="logo">
-🛍️ Poshak<span>Ghor</span>
-</div>
+    <div class="title">
+      ৬৫০ টাকার শপিং করো<br>
+      আর স্পিন করে পুরস্কার লুফে নাও!
+    </div>
 
-<div class="title">
+    <div class="subtitle">
+      শপিং • স্পিন • পুরস্কার 🎁
+    </div>
+  </div>
 
-৬৫০ টাকার শপিং করো
+  <div class="game">
 
-<br>
+    <div class="wheel-wrap">
+      <div class="pointer"></div>
 
-<span>
-আর স্পিন করে পুরস্কার লুফে নাও!
-</span>
+      <canvas id="wheel" width="700" height="700"></canvas>
 
-</div>
+      <div class="center">
+        SPIN
+      </div>
+    </div>
 
-<div class="subtitle">
-শপিং • স্পিন • পুরস্কার 🎁
-</div>
+    <button id="spinBtn" class="spin">
+      🎡 SPIN করুন
+    </button>
 
-</header>
+    <div id="result" class="result"></div>
 
+    <div class="note">
+      ৬৫০ টাকা বা তার বেশি শপিং করে স্পিন করুন।<br>
+      আপনার ভাগ্যে কোন পুরস্কার আছে দেখুন!
+    </div>
 
-<div class="card">
+  </div>
 
-<div class="wheel-area">
+  <details class="admin">
+    <summary>⚙️ Admin Control</summary>
 
-<div
-class="wheel"
-id="wheel"
->
+    <p style="font-size:13px;color:#666;">
+      প্রতিটি পুরস্কারের সর্বোচ্চ সংখ্যা এখান থেকে নিয়ন্ত্রণ করা যাবে।
+      এই সংস্করণে হিসাবটি এই ব্রাউজারেই সংরক্ষিত হবে।
+    </p>
 
-<canvas
-id="wheelCanvas"
-width="900"
-height="900">
-</canvas>
+    <table>
+      <thead>
+        <tr>
+          <th>পুরস্কার</th>
+          <th>সীমা</th>
+          <th>দেওয়া</th>
+        </tr>
+      </thead>
+      <tbody id="adminTable"></tbody>
+    </table>
 
-</div>
+    <button class="reset" onclick="resetGame()">
+      🔄 সব হিসাব Reset
+    </button>
+  </details>
 
-<div class="pointer"></div>
-
-</div>
-
-
-<button
-class="spin"
-id="spinButton"
->
-
-🎡 SPIN করুন
-
-</button>
-
-
-<div
-class="result"
-id="result"
->
-
-চাকা ঘুরিয়ে আপনার পুরস্কার দেখুন 🎉
-
-</div>
-
-</div>
-
-
-<!-- ADMIN -->
-
-<div class="card">
-
-<button
-class="admin-button"
-id="adminButton"
->
-
-⚙️ Admin Control
-
-</button>
-
-
-<div
-class="admin-panel"
-id="adminPanel"
->
-
-<p>
-
-<b>
-পুরস্কারের সর্বোচ্চ সংখ্যা নিয়ন্ত্রণ করুন
-</b>
-
-</p>
-
-
-<div
-class="grid"
-id="adminRows"
->
-
-<div><b>পুরস্কার</b></div>
-
-<div><b>সীমা</b></div>
-
-<div><b>দেওয়া</b></div>
+  <div class="footer">
+    © PoshakGhor • Spin & Win
+  </div>
 
 </div>
 
+<script>
 
-<button
-class="save"
-id="saveButton"
->
+const prizes = [
+  {name:"১", limit:10},
+  {name:"২", limit:10},
+  {name:"৩", limit:10},
+  {name:"৪", limit:10},
+  {name:"৫", limit:5},
+  {name:"৬", limit:5},
+  {name:"৭", limit:5},
+  {name:"৮", limit:5},
+  {name:"৯", limit:5},
+  {name:"১০", limit:5},
+  {name:"১৫%", limit:5},
+  {name:"ফ্রি ডেলিভারি", limit:5},
+  {name:"স্পেশাল গিফট", limit:10},
+  {name:"কিছুই পাননি", limit:10}
+];
 
-💾 সংরক্ষণ
+const colors = [
+  "#ff595e",
+  "#ffca3a",
+  "#8ac926",
+  "#1982c4",
+  "#6a4c93",
+  "#f77f00",
+  "#43aa8b",
+  "#577590",
+  "#f94144",
+  "#f9c74f",
+  "#90be6d",
+  "#277da1",
+  "#9b5de5",
+  "#555"
+];
 
-</button>
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
+consconst spinBtn = document.getElementById("spinBtn");
+const resultBox = document.getElementById("result");
+
+let rotation = 0;
+let spinning = false;
+
+let given = JSON.parse(
+  localStorage.getItem("poshakghor_given") || "[]"
+);
+
+if(given.length !== prizes.length){
+  given = prizes.map(() => 0);
+  saveData();
+}
+
+function saveData(){
+  localStorage.setItem(
+    "poshakghor_given",
+    JSON.stringify(given)
+  );
+}
+
+function drawWheel(){
+
+  const size = canvas.width;
+  const center = size / 2;
+  const radius = size / 2 - 8;
+
+  ctx.clearRect(0,0,size,size);
+
+  const slice = Math.PI * 2 / prizes.length;
+
+  ctx.save();
+
+  ctx.translate(center,center);
+
+  for(let i=0;i<prizes.length;i++){
+
+    const start = i * slice;
+    const end = start + slice;
+
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.arc(0,0,radius,start,end);
+    ctx.closePath();
+
+    ctx.fillStyle = colors[i];
+    ctx.fill();
+
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+
+    // Text
+    ctx.save();
+
+    ctx.rotate(start + slice/2);
+
+    ctx.translate(radius * 0.67,0);
+
+    ctx.rotate(Math.PI/2);
+
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 24px Arial, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    let text = prizes[i].name;
+
+    // ছোট লেখা হলে বড় রাখি
+    if(text.length > 10){
+      ctx.font = "bold 17px Arial, sans-serif";
+    }else if(text.length > 6){
+      ctx.font = "bold 19px Arial, sans-serif";
+    }
+
+    ctx.fillText(text,0,0);
+
+    ctx.restore();
+  }
+
+  // বাইরের বর্ডার
+  ctx.beginPath();
+  ctx.arc(0,0,radius,0,Math.PI*2);
+
+  ctx.strokeStyle="#172b78";
+  ctx.lineWidth=12;
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+drawWheel();
 
 
-<button
-class="reset"
-id="resetButton"
->
+function getAvailable(){
 
-↺ ডিফল্ট
+  return prizes
+    .map((p,i)=>({
+      ...p,
+      index:i,
+      remaining:p.limit-given[i]
+    }))
+    .filter(p=>p.remaining>0);
+}
 
-</button>
+
+function choosePrize(){
+
+  const available = getAvailable();
+
+  if(available.length===0){
+    return null;
+  }
+
+  // Remaining সংখ্যার ভিত্তিতে weighted selection
+  let total = 0;
+
+  available.forEach(p=>{
+    total += p.remaining;
+  });
+
+  let random = Math.random() * total;
+
+  for(const p of available){
+
+    random -= p.remaining;
+
+    if(random <= 0){
+      return p;
+    }
+  }
+
+  return available[available.length-1];
+}
 
 
-<p
-style="
-font-size:12px;
-color:#777;
-"
->
+function spin(){
 
-এই ডেমোতে পুরস্কারের হিসাব
-এই ব্রাউজারের Local Storage-এ
-সংরক্ষণ করা হয়।
+  if(spinning) return;
 
-</p>
+  const prize = choosePrize();
 
-</div>
+  if(!prize){
 
-</div>
+    resultBox.style.display="block";
+    resultBox.innerHTML="🎉 সব পুরস্কার শেষ হয়ে গেছে!";
+    return;
+  }
+
+  spinning=true;
+  spinBtn.disabled=true;
+  resultBox.style.display="none";
+
+  const sliceDeg = 360 / prizes.length;
+
+  // Pointer উপরে থাকবে।
+  // নির্বাচিত prize-এর মাঝখান pointer-এর নিচে আনতে হবে।
+
+  const targetCenter =
+    prize.index * sliceDeg + sliceDeg/2;
+
+  const pointerAngle = 270;
+
+  let target =
+    pointerAngle - targetCenter;
+
+  target = ((target % 360) + 360) % 360;
+
+  const extraSpins =
+    360 * (5 + Math.floor(Math.random()*3));
+
+  const finalRotation =
+    rotation + extraSpins + target;
+
+  canvas.style.transition =
+    "transform 5s cubic-bezier(.15,.75,.15,1)";
+
+  canvas.style.transform =
+    `rotate(${finalRotation}deg)`;
+
+  rotation = finalRotation;
+
+  setTimeout(()=>{
+
+    given[prize.index]++;
+
+    saveData();
+    updateAdmin();
+
+    resultBox.style.display="block";
+
+    if(prize.name==="কিছুই পাননি"){
+
+      resultBox.innerHTML =
+        "😔 দুঃখিত! এবার কিছুই পাননি।<br>" +
+        "<small>আবার শপিং করে চেষ্টা করুন!</small>";
+
+    }else{
+
+      resultBox.innerHTML =
+        "🎉 অভিনন্দন!<br>" +
+        "আপনি পেয়েছেন: <strong>" +
+        prize.name +
+        "</strong>";
+
+    }
+
+    spinning=false;
+    spinBtn.disabled=false;
+
+  },5200);
+}
+
+
+spinBtn.addEventListener("click",spin);
+
+
+function updateAdmin(){
+
+  const table =
+    document.getElementById("adminTable");
+
+  table.innerHTML="";
+
+  prizes.forEach((p,i)=>{
+
+    const tr=document.createElement("tr");
+
+    tr.innerHTML=`
+      <td>${p.name}</td>
+      <td>
+        <input
+          type="number"
+          min="0"
+          value="${p.limit}"
+          onchange="changeLimit(${i},this.value)"
+        >
+      </td>
+      <td>${given[i]}</td>
+    `;
+
+    table.appendChild(tr);
+  });
+}
+
+
+function changeLimit(index,value){
+
+  let n=parseInt(value);
+
+  if(isNaN(n) || n<0){
+    n=0;
+  }
+
+  prizes[index].limit=n;
+
+  updateAdmin();
+}
+
+
+function resetGame(){
+
+  if(confirm("সব পুরস্কারের দেওয়া হিসাব ০ করতে চান?")){
+
+    given=prizes.map(()=>0);
+
+    saveData();
+
+    updateAdmin();
+
+    resultBox.style.display="block";
+    resultBox.innerHTML="✅ সব হিসাব Reset হয়েছে।";
+  }
+}
+
+
+updateAdmin();
+
+</script>
+
+</body>
+</html>
